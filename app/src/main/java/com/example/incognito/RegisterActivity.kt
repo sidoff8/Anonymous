@@ -67,21 +67,44 @@ class RegisterActivity : AppCompatActivity() {
     private fun performRegister(){
         val email = email_editText_registration.text.toString()
         val password = password_editText_registration.text.toString()
-
-        if(email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Please enter your email and password", Toast.LENGTH_SHORT)
+        val phone = phone_editText_registration.text.toString()
+        if(email.isEmpty())  {
+            Toast.makeText(this, "Please enter your email", Toast.LENGTH_SHORT)
                 .show()
             return
         }
+        else if (password.isEmpty() ){
+            Toast.makeText(this, "Please enter your password", Toast.LENGTH_SHORT)
+                .show()
+            return
+        }
+        else if (profilephoto_imageviw_register.drawable == null){
+            Toast.makeText(this, "Please Upload your Photo", Toast.LENGTH_SHORT)
+                .show()
+            return
+        }
+        else if(phone.isEmpty())
+        {
+            Toast.makeText(this, "Please enter you Phone Number", Toast.LENGTH_SHORT)
+                .show()
+            return
+        }
+
         Log.d("RegisterActivity","Email is: " +email)
         Log.d("RegisterActivity","password: $password")
         //firebase Authentication
+        Toast.makeText(this, "Please Wait...", Toast.LENGTH_SHORT)
+            .show()
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email,password)
             .addOnCompleteListener{
                 if (!it.isSuccessful) return@addOnCompleteListener
                 //
                 Log.d("RegisterActivity", "Successfully created user with uid: ${it.result?.user?.uid}")
+                Toast.makeText(this, "User Created", Toast.LENGTH_SHORT)
+                    .show()
+
                 uploadImageToFirebaseStorage()
+
             }
             .addOnFailureListener {
                 Log.d("RegisterActivity","failed to create user: ${it.message}")

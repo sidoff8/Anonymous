@@ -176,6 +176,7 @@
         android:id="@+id/profilephoto_imageviw_register"
         android:layout_width="150dp"
         android:layout_height="150dp"
+        android:background="@android:color/transparent"
         app:civ_border_width="4dp"
         app:layout_constraintBottom_toTopOf="@+id/username_editText_registration"
         app:layout_constraintEnd_toEndOf="parent"
